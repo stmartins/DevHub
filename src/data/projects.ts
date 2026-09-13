@@ -6,6 +6,7 @@ export type BaseProject = {
   description: Localized;
   tags: string[];
   thumbnail?: string;
+  demoGif?: string;
 };
 
 export type WebProject = BaseProject & {
@@ -15,7 +16,6 @@ export type WebProject = BaseProject & {
 
 export type MobileProject = BaseProject & {
   type: "mobile";
-  demoGif?: string;
   webVersionUrl?: string;
   githubRepo?: { owner: string; repo: string };
 };
@@ -35,6 +35,7 @@ export const projects: Project[] = [
     tags: ["Nuxt", "Vue.js"],
     liveUrl: "https://save-my-print.vercel.app/change-colors",
     thumbnail: "/media/save-my-print-thumb.png",
+    demoGif: "/media/save-my-print-demo.gif",
   },
   {
     id: "web-project-2",
@@ -49,17 +50,16 @@ export const projects: Project[] = [
     thumbnail: "/media/web-project-2-thumb.svg",
   },
   {
-    id: "mobile-project-1",
+    id: "family-tracker",
     type: "mobile",
-    title: { fr: "App Mobile #1 (Flutter)", en: "Mobile App #1 (Flutter)" },
+    title: { fr: "Family Tracker", en: "Family Tracker" },
     description: {
-      fr: "[Décris l'app Flutter, ses fonctionnalités clés, et pourquoi elle n'est pas encore sur le Play Store.]",
-      en: "[Describe the Flutter app, its key features, and why it isn't on the Play Store yet.]",
+      fr: "Application de suivi de position familiale en temps réel : carte partagée entre les membres du groupe, historique des trajets, points de rendez-vous, alertes d'urgence et messagerie privée. App Android en Kotlin / Jetpack Compose, API en Go.",
+      en: "Real-time family location tracking app: shared map between group members, trip history, meetup points, emergency alerts and private messaging. Android app in Kotlin / Jetpack Compose, API in Go.",
     },
-    tags: ["Flutter", "Dart"],
-    thumbnail: "/media/mobile-project-1-thumb.svg",
-    demoGif: "/media/mobile-project-1-demo.gif",
-    githubRepo: { owner: "[ton-pseudo]", repo: "[nom-du-repo]" },
+    tags: ["Kotlin", "Jetpack Compose", "Go"],
+    thumbnail: "/media/family-tracker-thumb.jpg",
+    webVersionUrl: "https://family-tracker-web-z4ur.onrender.com/",
   },
   {
     id: "mobile-project-2",

@@ -124,7 +124,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </span>
         </div>
 
-        {project.type === "mobile" && project.demoGif && (
+        {project.demoGif && (
           <img
             src={project.demoGif}
             alt={language === "fr" ? `Démo animée de ${title}` : `Animated demo of ${title}`}

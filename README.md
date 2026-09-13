@@ -20,12 +20,28 @@ npm run build
 Génère un dossier `dist/` déployable tel quel sur Vercel ou Render (preset
 "Vite" détecté automatiquement, aucune config supplémentaire nécessaire).
 
+## Site bilingue (FR/EN)
+
+Le site propose un sélecteur de langue (drapeau 🇫🇷/🇬🇧 dans le header). Tout
+le texte affiché passe par ce système :
+
+- `src/i18n/language.tsx` — contexte React (`useLanguage`) qui expose la
+  langue courante et `toggleLanguage`. La langue est mémorisée dans le
+  navigateur (localStorage) et devine la langue par défaut à partir du
+  navigateur au premier chargement.
+- `src/i18n/translations.ts` — tous les textes fixes de l'interface (nav,
+  boutons, titres de section), sous la forme `{ fr: "...", en: "..." }`.
+- Le contenu éditable (`profile.ts`, `projects.ts`) utilise le même format
+  `{ fr, en }` pour les champs traduisibles (titre, bio, description).
+
 ## Remplacer le contenu placeholder
 
 Tout le contenu éditable vit dans deux fichiers :
 
-- `src/data/profile.ts` — nom, titre, bio, compétences, liens de contact.
-- `src/data/projects.ts` — liste des projets (sites web et apps mobiles).
+- `src/data/profile.ts` — nom, titre, bio (en `{ fr, en }`), compétences,
+  liens de contact.
+- `src/data/projects.ts` — liste des projets (sites web et apps mobiles),
+  avec titre et description en `{ fr, en }`.
 
 Pour chaque projet (web ou mobile) :
 

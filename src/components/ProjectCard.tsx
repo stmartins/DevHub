@@ -1,4 +1,6 @@
 import type { Project } from "../data/projects";
+import { useLanguage } from "../i18n/language";
+import { translations } from "../i18n/translations";
 import { useLatestGithubRelease } from "../hooks/useLatestGithubRelease";
 
 function ProjectTags({ tags }: { tags: string[] }) {
@@ -21,12 +23,14 @@ function ApkDownloadButton({
 }: {
   githubRepo: NonNullable<Extract<Project, { type: "mobile" }>["githubRepo"]>;
 }) {
+  const { language } = useLanguage();
+  const t = translations.projects;
   const { apkUrl, version, loading, error } = useLatestGithubRelease(githubRepo);
 
   if (loading) {
     return (
       <span className="rounded-full border border-border px-4 py-2 text-sm text-muted">
-        Recherche de la dernière version…
+        {t.searchingRelease[language]}
       </span>
     );
   }
@@ -39,7 +43,7 @@ function ApkDownloadButton({
         rel="noreferrer"
         className="rounded-full border border-border px-4 py-2 text-sm text-ink transition-colors hover:border-ink"
       >
-        Voir les releases GitHub
+        {t.viewReleases[language]}
       </a>
     );
   }
@@ -49,17 +53,26 @@ function ApkDownloadButton({
       href={apkUrl}
       className="rounded-full border border-border px-4 py-2 text-sm text-ink transition-colors hover:border-ink"
     >
-      Télécharger l'APK{version ? ` (${version})` : ""}
+      {t.downloadApk[language]}
+      {version ? ` (${version})` : ""}
     </a>
   );
 }
 
-function ProjectThumbnail({ project }: { project: Project }) {
+function ProjectThumbnail({
+  project,
+  label,
+}: {
+  project: Project;
+  label: string;
+}) {
+  const { language } = useLanguage();
+
   if (project.thumbnail) {
     return (
       <img
         src={project.thumbnail}
-        alt={`Aperçu de ${project.title}`}
+        alt={label}
         className="h-full w-full object-cover"
       />
     );
@@ -67,36 +80,44 @@ function ProjectThumbnail({ project }: { project: Project }) {
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-accent-soft text-sm text-muted">
-      Aperçu à venir
+      {translations.projects.previewSoon[language]}
     </div>
   );
 }
 
 export function ProjectCard({ project }: { project: Project }) {
+  const { language } = useLanguage();
+  const t = translations.projects;
+  const title = project.title[language];
+  const description = project.description[language];
+
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
       <div className="aspect-video w-full border-b border-border">
-        <ProjectThumbnail project={project} />
+        <ProjectThumbnail
+          project={project}
+          label={language === "fr" ? `Aperçu de ${title}` : `Preview of ${title}`}
+        />
       </div>
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-lg font-semibold text-ink">{project.title}</h3>
+          <h3 className="text-lg font-semibold text-ink">{title}</h3>
           <span className="shrink-0 rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
-            {project.type === "web" ? "Site web" : "App mobile"}
+            {project.type === "web" ? t.typeWeb[language] : t.typeMobile[language]}
           </span>
         </div>
 
         {project.type === "mobile" && project.demoGif && (
           <img
             src={project.demoGif}
-            alt={`Démo animée de ${project.title}`}
+            alt={language === "fr" ? `Démo animée de ${title}` : `Animated demo of ${title}`}
             className="mx-auto mt-4 h-72 w-auto rounded-xl border border-border"
           />
         )}
 
         <p className="mt-4 flex-1 text-sm leading-relaxed text-muted">
-          {project.description}
+          {description}
         </p>
 
         <ProjectTags tags={project.tags} />
@@ -109,7 +130,7 @@ export function ProjectCard({ project }: { project: Project }) {
               rel="noreferrer"
               className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
-              Voir le site ↗
+              {t.viewSite[language]}
             </a>
           )}
 
@@ -120,7 +141,7 @@ export function ProjectCard({ project }: { project: Project }) {
               rel="noreferrer"
               className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
-              Essayer en ligne ↗
+              {t.tryOnline[language]}
             </a>
           )}
 

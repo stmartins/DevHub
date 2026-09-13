@@ -1,16 +1,18 @@
 import { projects } from "../data/projects";
+import { useLanguage } from "../i18n/language";
+import { translations } from "../i18n/translations";
 import { ProjectCard } from "./ProjectCard";
 
 export function ProjectsSection() {
+  const { language } = useLanguage();
+  const t = translations.projects;
+
   return (
     <section id="projets" className="mx-auto max-w-5xl px-6 py-20">
       <h2 className="text-2xl font-semibold tracking-tight text-ink">
-        Projets
+        {t.heading[language]}
       </h2>
-      <p className="mt-2 text-muted">
-        Une sélection de sites web et d'applications mobiles que j'ai
-        réalisés.
-      </p>
+      <p className="mt-2 text-muted">{t.subheading[language]}</p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
         {projects.map((project) => (

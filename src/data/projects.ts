@@ -23,14 +23,14 @@ export type Project = WebProject | MobileProject;
 // Contenu placeholder — remplace ces entrées par tes vraies réalisations.
 export const projects: Project[] = [
   {
-    id: "web-project-1",
+    id: "save-my-print",
     type: "web",
-    title: "Projet Web #1",
+    title: "Save My Print",
     description:
-      "[Décris ce projet : le problème résolu, ton rôle, ce qui le rend intéressant.]",
-    tags: ["React", "TypeScript"],
-    liveUrl: "#",
-    thumbnail: "/media/web-project-1-thumb.svg",
+      "Quand une cartouche d'imprimante est vide, impossible d'imprimer normalement. Save My Print corrige la couleur manquante (cyan, magenta, jaune ou noir) directement sur le document pour pouvoir quand même l'imprimer.",
+    tags: ["Nuxt", "Vue.js"],
+    liveUrl: "https://save-my-print.vercel.app/change-colors",
+    thumbnail: "/media/save-my-print-thumb.png",
   },
   {
     id: "web-project-2",

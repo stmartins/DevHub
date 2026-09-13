@@ -90,15 +90,31 @@ export function ProjectCard({ project }: { project: Project }) {
   const t = translations.projects;
   const title = project.title[language];
   const description = project.description[language];
+  const linkUrl = project.type === "web" ? project.liveUrl : project.webVersionUrl;
+
+  const thumbnail = (
+    <ProjectThumbnail
+      project={project}
+      label={language === "fr" ? `Aperçu de ${title}` : `Preview of ${title}`}
+    />
+  );
 
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
-      <div className="aspect-video w-full border-b border-border">
-        <ProjectThumbnail
-          project={project}
-          label={language === "fr" ? `Aperçu de ${title}` : `Preview of ${title}`}
-        />
-      </div>
+      {linkUrl ? (
+        <a
+          href={linkUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="block aspect-video w-full border-b border-border transition-opacity hover:opacity-90"
+        >
+          {thumbnail}
+        </a>
+      ) : (
+        <div className="aspect-video w-full border-b border-border">
+          {thumbnail}
+        </div>
+      )}
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-4">

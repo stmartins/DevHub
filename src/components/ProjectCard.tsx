@@ -59,7 +59,7 @@ function ApkDownloadButton({
   );
 }
 
-function ProjectThumbnail({
+function ProjectMedia({
   project,
   label,
 }: {
@@ -67,11 +67,12 @@ function ProjectThumbnail({
   label: string;
 }) {
   const { language } = useLanguage();
+  const src = project.demoGif ?? project.thumbnail;
 
-  if (project.thumbnail) {
+  if (src) {
     return (
       <img
-        src={project.thumbnail}
+        src={src}
         alt={label}
         className="h-full w-full object-cover"
       />
@@ -85,6 +86,16 @@ function ProjectThumbnail({
   );
 }
 
+function PhoneFrameMedia({ src, label }: { src: string; label: string }) {
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-accent-soft/40 py-6">
+      <div className="relative aspect-[9/19] h-72 overflow-hidden rounded-[1.75rem] border-4 border-ink bg-black shadow-lg">
+        <img src={src} alt={label} className="h-full w-full object-cover" />
+      </div>
+    </div>
+  );
+}
+
 export function ProjectCard({ project }: { project: Project }) {
   const { language } = useLanguage();
   const t = translations.projects;
@@ -92,47 +103,47 @@ export function ProjectCard({ project }: { project: Project }) {
   const description = project.description[language];
   const linkUrl = project.type === "web" ? project.liveUrl : project.webVersionUrl;
 
-  const thumbnail = (
-    <ProjectThumbnail
-      project={project}
-      label={language === "fr" ? `Aperçu de ${title}` : `Preview of ${title}`}
-    />
+  const mediaLabel = project.demoGif
+    ? language === "fr"
+      ? `Démo animée de ${title}`
+      : `Animated demo of ${title}`
+    : language === "fr"
+      ? `Aperçu de ${title}`
+      : `Preview of ${title}`;
+
+  // Sur mobile, le gif est un enregistrement d'écran portrait : on le
+  // cadre dans un mockup de téléphone plutôt que de l'étirer en plein écran.
+  const isPhoneDemo = project.type === "mobile" && Boolean(project.demoGif);
+
+  const media = isPhoneDemo ? (
+    <PhoneFrameMedia src={project.demoGif!} label={mediaLabel} />
+  ) : (
+    <ProjectMedia project={project} label={mediaLabel} />
   );
+
+  const mediaWrapperClass = isPhoneDemo
+    ? "mt-4 w-full border-y border-border transition-opacity hover:opacity-90"
+    : "mt-4 block aspect-video w-full border-y border-border transition-opacity hover:opacity-90";
 
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+      <div className="flex items-start justify-between gap-4 p-6 pb-0">
+        <h3 className="text-lg font-semibold text-ink">{title}</h3>
+        <span className="shrink-0 rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
+          {project.type === "web" ? t.typeWeb[language] : t.typeMobile[language]}
+        </span>
+      </div>
+
       {linkUrl ? (
-        <a
-          href={linkUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="block aspect-video w-full border-b border-border transition-opacity hover:opacity-90"
-        >
-          {thumbnail}
+        <a href={linkUrl} target="_blank" rel="noreferrer" className={mediaWrapperClass}>
+          {media}
         </a>
       ) : (
-        <div className="aspect-video w-full border-b border-border">
-          {thumbnail}
-        </div>
+        <div className={mediaWrapperClass}>{media}</div>
       )}
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-lg font-semibold text-ink">{title}</h3>
-          <span className="shrink-0 rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
-            {project.type === "web" ? t.typeWeb[language] : t.typeMobile[language]}
-          </span>
-        </div>
-
-        {project.demoGif && (
-          <img
-            src={project.demoGif}
-            alt={language === "fr" ? `Démo animée de ${title}` : `Animated demo of ${title}`}
-            className="mx-auto mt-4 h-72 w-auto rounded-xl border border-border"
-          />
-        )}
-
-        <p className="mt-4 flex-1 text-sm leading-relaxed text-muted">
+        <p className="text-sm leading-relaxed text-muted">
           {description}
         </p>
 

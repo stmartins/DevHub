@@ -47,7 +47,7 @@ export const projects: Project[] = [
     },
     tags: ["Nuxt", "Vue.js"],
     liveUrl: "#",
-    demoGif: "/media/fast-market-list-demo-placeholder.svg",
+    demoGif: "/media/fast-market-list.gif",
   },
   {
     id: "family-tracker",

@@ -129,9 +129,16 @@ export function ProjectCard({ project }: { project: Project }) {
     <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
       <div className="flex items-start justify-between gap-4 p-6 pb-0">
         <h3 className="text-lg font-semibold text-ink">{title}</h3>
-        <span className="shrink-0 rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
-          {project.type === "web" ? t.typeWeb[language] : t.typeMobile[language]}
-        </span>
+        <div className="flex shrink-0 flex-wrap justify-end gap-2">
+          <span className="rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
+            {project.type === "web" ? t.typeWeb[language] : t.typeMobile[language]}
+          </span>
+          {project.type === "mobile" && project.webVersionUrl && (
+            <span className="rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
+              {t.typeWeb[language]}
+            </span>
+          )}
+        </div>
       </div>
 
       {linkUrl ? (

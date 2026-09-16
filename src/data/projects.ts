@@ -46,7 +46,7 @@ export const projects: Project[] = [
       en: "Shopping list builder: search products (typed or by voice, transcribed via Whisper) in a supermarket catalog, add them to a cart with quantities, and see the running total in real time.",
     },
     tags: ["Nuxt", "Vue.js"],
-    liveUrl: "#",
+    liveUrl: "https://fast-market-list.vercel.app/",
     demoGif: "/media/fast-market-list.gif",
   },
   {

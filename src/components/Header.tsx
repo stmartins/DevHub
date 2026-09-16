@@ -59,31 +59,33 @@ export function Header() {
         <div className="flex items-center gap-3 sm:gap-6">
           <nav className="hidden gap-6 text-sm text-muted sm:flex">{navLinks}</nav>
           {languageSwitcher}
-          <button
-            type="button"
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-ink sm:hidden"
-          >
-            <span className="sr-only">Menu</span>
-            {menuOpen ? (
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-              </svg>
+          <div className="relative sm:hidden">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-ink"
+            >
+              <span className="sr-only">Menu</span>
+              {menuOpen ? (
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
+                </svg>
+              )}
+            </button>
+            {menuOpen && (
+              <nav className="absolute right-0 top-full mt-2 flex w-40 flex-col gap-3 rounded-2xl border border-border bg-background p-4 text-sm text-muted shadow-lg">
+                {navLinks}
+              </nav>
             )}
-          </button>
+          </div>
         </div>
       </div>
-      {menuOpen && (
-        <nav className="flex flex-col gap-4 border-t border-border/60 px-4 py-4 text-sm text-muted sm:hidden">
-          {navLinks}
-        </nav>
-      )}
     </header>
   );
 }

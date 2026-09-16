@@ -42,8 +42,8 @@ export const projects: Project[] = [
     type: "web",
     title: { fr: "Fast Market List", en: "Fast Market List" },
     description: {
-      fr: "Constructeur de liste de courses : recherche des produits (texte ou dictée vocale transcrite via Whisper) dans un catalogue de supermarché, les ajoute à un panier avec quantités et calcule le total en temps réel.",
-      en: "Shopping list builder: search products (typed or by voice, transcribed via Whisper) in a supermarket catalog, add them to a cart with quantities, and see the running total in real time.",
+      fr: "Constructeur de liste de courses : recherche des produits dans un catalogue de supermarché, les ajoute à un panier avec quantités et calcule le total en temps réel.",
+      en: "Shopping list builder: search products in a supermarket catalog, add them to a cart with quantities, and see the running total in real time.",
     },
     tags: ["Nuxt", "Vue.js"],
     liveUrl: "https://fast-market-list.vercel.app/",

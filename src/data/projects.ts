@@ -7,6 +7,8 @@ export type BaseProject = {
   tags: string[];
   thumbnail?: string;
   demoGif?: string;
+  // Vidéo de démo (mp4/webm), prioritaire sur le gif quand elle est définie.
+  demoVideo?: string;
 };
 
 export type WebProject = BaseProject & {
@@ -35,7 +37,7 @@ export const projects: Project[] = [
     tags: ["Nuxt", "Vue.js"],
     liveUrl: "https://save-my-print.vercel.app/change-colors",
     thumbnail: "/media/save-my-print-thumb.png",
-    demoGif: "/media/save-my-print-demo.gif",
+    demoVideo: "/media/save-my-print-demo.mp4",
   },
   {
     id: "fast-market-list",
@@ -59,7 +61,7 @@ export const projects: Project[] = [
     },
     tags: ["Kotlin", "Jetpack Compose", "Go"],
     thumbnail: "/media/family-tracker-thumb.jpg",
-    demoGif: "/media/family-tracker-demo.gif",
+    demoVideo: "/media/family-tracker-demo.mp4",
     webVersionUrl: "https://family-tracker-web-z4ur.onrender.com/",
   },
   {

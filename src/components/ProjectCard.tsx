@@ -59,6 +59,35 @@ function ApkDownloadButton({
   );
 }
 
+function DemoMedia({
+  project,
+  label,
+}: {
+  project: Project;
+  label: string;
+}) {
+  const className = "h-full w-full object-cover";
+
+  if (project.demoVideo) {
+    return (
+      <video
+        src={project.demoVideo}
+        poster={project.thumbnail}
+        aria-label={label}
+        className={className}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+      />
+    );
+  }
+
+  const src = project.demoGif ?? project.thumbnail;
+  return src ? <img src={src} alt={label} className={className} /> : null;
+}
+
 function ProjectMedia({
   project,
   label,
@@ -67,16 +96,9 @@ function ProjectMedia({
   label: string;
 }) {
   const { language } = useLanguage();
-  const src = project.demoGif ?? project.thumbnail;
 
-  if (src) {
-    return (
-      <img
-        src={src}
-        alt={label}
-        className="h-full w-full object-cover"
-      />
-    );
+  if (project.demoVideo || project.demoGif || project.thumbnail) {
+    return <DemoMedia project={project} label={label} />;
   }
 
   return (
@@ -86,11 +108,11 @@ function ProjectMedia({
   );
 }
 
-function PhoneFrameMedia({ src, label }: { src: string; label: string }) {
+function PhoneFrameMedia({ project, label }: { project: Project; label: string }) {
   return (
     <div className="flex h-full w-full items-center justify-center bg-accent-soft/40 py-6">
       <div className="relative aspect-[9/19] h-72 overflow-hidden rounded-[1.75rem] border-4 border-ink bg-black shadow-lg">
-        <img src={src} alt={label} className="h-full w-full object-cover" />
+        <DemoMedia project={project} label={label} />
       </div>
     </div>
   );
@@ -103,7 +125,9 @@ export function ProjectCard({ project }: { project: Project }) {
   const description = project.description[language];
   const linkUrl = project.type === "web" ? project.liveUrl : project.webVersionUrl;
 
-  const mediaLabel = project.demoGif
+  const hasDemo = Boolean(project.demoVideo || project.demoGif);
+
+  const mediaLabel = hasDemo
     ? language === "fr"
       ? `Démo animée de ${title}`
       : `Animated demo of ${title}`
@@ -113,10 +137,12 @@ export function ProjectCard({ project }: { project: Project }) {
 
   // Sur mobile, le gif est un enregistrement d'écran portrait : on le
   // cadre dans un mockup de téléphone plutôt que de l'étirer en plein écran.
-  const isPhoneDemo = project.type === "mobile" && Boolean(project.demoGif);
+  // Les vidéos de présentation sont en paysage, elles gardent le format 16:9.
+  const isPhoneDemo =
+    project.type === "mobile" && !project.demoVideo && Boolean(project.demoGif);
 
   const media = isPhoneDemo ? (
-    <PhoneFrameMedia src={project.demoGif!} label={mediaLabel} />
+    <PhoneFrameMedia project={project} label={mediaLabel} />
   ) : (
     <ProjectMedia project={project} label={mediaLabel} />
   );

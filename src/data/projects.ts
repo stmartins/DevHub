@@ -75,11 +75,12 @@ export const projects: Project[] = [
     type: "mobile",
     title: { fr: "PDFland", en: "PDFland" },
     description: {
-      fr: "Application Android pour éditer des PDF en déplacement : signer, modifier ou ajouter du texte, scanner un document papier avec l'appareil photo, fusionner, organiser les pages, compresser et convertir des photos en PDF. Tout le traitement se fait sur le téléphone, hors ligne, sans rien envoyer à un serveur. App en Flutter, moteur PDF en Go (pdfcpu) embarqué via dart:ffi.",
-      en: "Android app for editing PDFs on the go: sign, edit or add text, scan paper documents with the camera, merge, reorder pages, compress and turn photos into PDFs. All processing runs on the phone, offline, with nothing uploaded to a server. App in Flutter, Go PDF engine (pdfcpu) embedded through dart:ffi.",
+      fr: "Éditer des PDF sur Android ou dans le navigateur : signer, modifier ou ajouter du texte, fusionner, organiser les pages, compresser et convertir des photos en PDF. Sur Android, tout se fait sur le téléphone, hors ligne, et on peut aussi scanner un document papier avec l'appareil photo. App en Flutter, version web en React, même moteur PDF en Go (pdfcpu) : embarqué via dart:ffi dans l'app, servi par une API pour le web.",
+      en: "Edit PDFs on Android or in the browser: sign, edit or add text, merge, reorder pages, compress and turn photos into PDFs. On Android everything runs on the phone, offline, and you can also scan paper documents with the camera. Flutter app, React web version, same Go PDF engine (pdfcpu): embedded through dart:ffi in the app, served by an API for the web.",
     },
-    tags: ["Flutter", "Go"],
+    tags: ["Flutter", "React", "Go"],
     thumbnail: "/media/pdfland-thumb.jpg",
     demoVideo: "/media/pdfland-demo.mp4",
+    webVersionUrl: "https://pdfland-web.onrender.com/",
   },
 ];

@@ -61,3 +61,13 @@ Pour un projet mobile :
   dernier fichier `.apk` de la dernière release à chaque chargement de page
   (via l'API GitHub, sans clé requise) — pas besoin de mettre à jour le lien
   à chaque nouvelle version.
+
+## Section CV
+
+La section CV (`src/components/CvSection.tsx`) affiche le parcours en version
+courte ou détaillée et propose le PDF correspondant à la langue choisie.
+
+- `src/data/cv.ts` — expériences et formation, générées depuis
+  `resumme-builder-fork/data/build_cv.py`.
+- `public/cv/stephane-martins-cv-{short,long}-{fr,en}.pdf` — les 4 PDF, rendus
+  avec resumme-builder à partir de `data/public/` (sans numéro de téléphone).

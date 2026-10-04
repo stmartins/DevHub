@@ -12,6 +12,9 @@ export function Header() {
       <a href="#projets" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
         {t.projects[language]}
       </a>
+      <a href="#cv" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
+        {t.cv[language]}
+      </a>
       <a href="#a-propos" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
         {t.about[language]}
       </a>

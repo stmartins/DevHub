@@ -1,6 +1,7 @@
 export const translations = {
   nav: {
     projects: { fr: "Projets", en: "Projects" },
+    cv: { fr: "CV", en: "Resume" },
     about: { fr: "À propos", en: "About" },
     contact: { fr: "Contact", en: "Contact" },
   },
@@ -29,6 +30,18 @@ export const translations = {
     },
     downloadApk: { fr: "Télécharger l'APK", en: "Download APK" },
     previewSoon: { fr: "Aperçu à venir", en: "Preview coming soon" },
+  },
+  cv: {
+    heading: { fr: "CV", en: "Resume" },
+    subheading: {
+      fr: "Mon parcours, en version courte ou détaillée — téléchargeable en PDF.",
+      en: "My experience, in a short or detailed version — downloadable as a PDF.",
+    },
+    short: { fr: "Courte", en: "Short" },
+    long: { fr: "Détaillée", en: "Detailed" },
+    download: { fr: "Télécharger le PDF ↓", en: "Download PDF ↓" },
+    present: { fr: "aujourd'hui", en: "present" },
+    education: { fr: "Formation", en: "Education" },
   },
   about: {
     heading: { fr: "À propos", en: "About" },

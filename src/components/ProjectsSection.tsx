@@ -5,20 +5,15 @@ import { ProjectCard } from "./ProjectCard";
 
 export function ProjectsSection() {
   const { language } = useLanguage();
-  const t = translations.projects;
 
   return (
-    <section id="projets" className="mx-auto max-w-5xl px-6 py-20">
-      <h2 className="text-2xl font-semibold tracking-tight text-ink">
-        {t.heading[language]}
+    <section id="projets" aria-labelledby="projets-heading">
+      <h2 id="projets-heading" className="sr-only">
+        {translations.projects.heading[language]}
       </h2>
-      <p className="mt-2 text-muted">{t.subheading[language]}</p>
-
-      <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+      {projects.map((project, index) => (
+        <ProjectCard key={project.id} project={project} index={index} />
+      ))}
     </section>
   );
 }

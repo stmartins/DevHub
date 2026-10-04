@@ -6,10 +6,12 @@ export function Footer() {
   const { language } = useLanguage();
 
   return (
-    <footer className="border-t border-border/60">
-      <div className="mx-auto max-w-5xl px-6 py-8 text-sm text-muted">
-        © {new Date().getFullYear()} {profile.name} —{" "}
-        {translations.footer.tagline[language]}
+    <footer className="border-t-2 border-ink">
+      <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-2 px-6 py-8 text-sm font-medium">
+        <span className="font-display font-bold">
+          © {new Date().getFullYear()} {profile.name}
+        </span>
+        <span className="text-muted">{translations.footer.tagline[language]}</span>
       </div>
     </footer>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLanguage } from "../i18n/language";
+import { useLanguage, type Language } from "../i18n/language";
 import { translations } from "../i18n/translations";
 
 export function Header() {
@@ -9,68 +9,52 @@ export function Header() {
 
   const navLinks = (
     <>
-      <a href="#projets" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
+      <a href="#projets" className="hover:underline" onClick={() => setMenuOpen(false)}>
         {t.projects[language]}
       </a>
-      <a href="#cv" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
+      <a href="#cv" className="hover:underline" onClick={() => setMenuOpen(false)}>
         {t.cv[language]}
       </a>
-      <a href="#a-propos" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
-        {t.about[language]}
-      </a>
-      <a href="#contact" className="transition-colors hover:text-ink" onClick={() => setMenuOpen(false)}>
+      <a href="#contact" className="hover:underline" onClick={() => setMenuOpen(false)}>
         {t.contact[language]}
       </a>
     </>
   );
 
-  const languageSwitcher = (
-    <div className="flex items-center gap-1 rounded-full border border-border p-1">
-      <button
-        type="button"
-        onClick={() => setLanguage("fr")}
-        aria-pressed={language === "fr"}
-        aria-label="Passer en français"
-        className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium transition-colors ${
-          language === "fr" ? "bg-[#93c0fb] text-ink" : "text-muted hover:text-ink"
-        }`}
-      >
-        <span aria-hidden="true">🇫🇷</span>
-        FR
-      </button>
-      <button
-        type="button"
-        onClick={() => setLanguage("en")}
-        aria-pressed={language === "en"}
-        aria-label="Switch to English"
-        className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium transition-colors ${
-          language === "en" ? "bg-[#93c0fb] text-ink" : "text-muted hover:text-ink"
-        }`}
-      >
-        <span aria-hidden="true">🇬🇧</span>
-        EN
-      </button>
-    </div>
+  const languageButton = (value: Language, label: string, ariaLabel: string) => (
+    <button
+      type="button"
+      onClick={() => setLanguage(value)}
+      aria-pressed={language === value}
+      aria-label={ariaLabel}
+      className={`min-h-10 rounded-full px-3 text-sm font-semibold transition-colors ${
+        language === value ? "bg-white text-ink" : "text-white/75 hover:text-white"
+      }`}
+    >
+      {label}
+    </button>
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
-        <a href="#top" className="font-mono text-lg font-semibold tracking-tight">
+    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
+        <a href="#top" className="font-display text-2xl font-extrabold">
           DevHub
         </a>
-        <div className="flex items-center gap-3 sm:gap-6">
-          <nav className="hidden gap-6 text-sm text-muted sm:flex">{navLinks}</nav>
-          {languageSwitcher}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <nav className="hidden gap-6 font-semibold sm:flex">{navLinks}</nav>
+          <div className="flex items-center gap-1 rounded-full bg-ink p-1">
+            {languageButton("fr", "FR", t.switchToFrench[language])}
+            {languageButton("en", "EN", t.switchToEnglish[language])}
+          </div>
           <div className="relative sm:hidden">
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-ink"
+              className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink"
             >
-              <span className="sr-only">Menu</span>
               {menuOpen ? (
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
@@ -82,7 +66,7 @@ export function Header() {
               )}
             </button>
             {menuOpen && (
-              <nav className="absolute right-0 top-full mt-2 flex w-40 flex-col gap-3 rounded-2xl border border-border bg-background p-4 text-sm text-muted shadow-lg">
+              <nav className="absolute right-0 top-full mt-2 flex w-44 flex-col gap-4 rounded-2xl border-2 border-ink bg-background p-5 font-semibold shadow-lg">
                 {navLinks}
               </nav>
             )}

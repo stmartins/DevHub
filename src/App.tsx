@@ -1,4 +1,3 @@
-import { AboutSection } from "./components/AboutSection";
 import { ContactSection } from "./components/ContactSection";
 import { CvSection } from "./components/CvSection";
 import { Footer } from "./components/Footer";
@@ -10,13 +9,12 @@ import { LanguageProvider } from "./i18n/language";
 function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-background text-ink">
+      <div className="min-h-screen bg-background font-sans text-ink">
         <Header />
         <main>
           <Hero />
           <ProjectsSection />
           <CvSection />
-          <AboutSection />
           <ContactSection />
         </main>
         <Footer />

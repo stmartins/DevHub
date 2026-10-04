@@ -5,6 +5,9 @@ export type BaseProject = {
   title: Localized;
   description: Localized;
   tags: string[];
+  // Couleur de fond de la bande du projet (texte blanc par-dessus : garder un
+  // contraste d'au moins 4.5:1).
+  color: string;
   thumbnail?: string;
   demoGif?: string;
   // Vidéo de démo (mp4/webm), prioritaire sur le gif quand elle est définie.
@@ -24,10 +27,10 @@ export type MobileProject = BaseProject & {
 
 export type Project = WebProject | MobileProject;
 
-// Contenu placeholder — remplace ces entrées par tes vraies réalisations.
 export const projects: Project[] = [
   {
     id: "save-my-print",
+    color: "#b4400f",
     type: "web",
     title: { fr: "Save My Print", en: "Save My Print" },
     description: {
@@ -41,6 +44,7 @@ export const projects: Project[] = [
   },
   {
     id: "fast-market-list",
+    color: "#6d28d9",
     type: "web",
     title: { fr: "Fast Market List", en: "Fast Market List" },
     description: {
@@ -53,6 +57,7 @@ export const projects: Project[] = [
   },
   {
     id: "family-tracker",
+    color: "#1e40af",
     type: "mobile",
     title: { fr: "Family Tracker", en: "Family Tracker" },
     description: {
@@ -66,6 +71,7 @@ export const projects: Project[] = [
   },
   {
     id: "pdfland",
+    color: "#065f46",
     type: "mobile",
     title: { fr: "PDFland", en: "PDFland" },
     description: {

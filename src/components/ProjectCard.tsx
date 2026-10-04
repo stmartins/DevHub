@@ -3,18 +3,31 @@ import { useLanguage } from "../i18n/language";
 import { translations } from "../i18n/translations";
 import { useLatestGithubRelease } from "../hooks/useLatestGithubRelease";
 
-function ProjectTags({ tags }: { tags: string[] }) {
+// Bouton plein blanc dont le texte prend la couleur de la bande du projet.
+function SolidButton({ href, color, children }: { href: string; color: string; children: string }) {
   return (
-    <div className="mt-4 flex flex-wrap gap-2">
-      {tags.map((tag) => (
-        <span
-          key={tag}
-          className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent"
-        >
-          {tag}
-        </span>
-      ))}
-    </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      style={{ color }}
+      className="rounded-full bg-white px-5 py-3.5 font-semibold transition-opacity hover:opacity-90"
+    >
+      {children}
+    </a>
+  );
+}
+
+function OutlineButton({ href, children }: { href: string; children: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="rounded-full border-2 border-white px-5 py-3 font-semibold text-white transition-colors hover:bg-white/10"
+    >
+      {children}
+    </a>
   );
 }
 
@@ -29,7 +42,7 @@ function ApkDownloadButton({
 
   if (loading) {
     return (
-      <span className="rounded-full border border-border px-4 py-2 text-sm text-muted">
+      <span className="rounded-full border-2 border-white/50 px-5 py-3 font-semibold text-white/80">
         {t.searchingRelease[language]}
       </span>
     );
@@ -37,36 +50,22 @@ function ApkDownloadButton({
 
   if (error || !apkUrl) {
     return (
-      <a
-        href={`https://github.com/${githubRepo.owner}/${githubRepo.repo}/releases`}
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-full border border-border px-4 py-2 text-sm text-ink transition-colors hover:border-ink"
-      >
+      <OutlineButton href={`https://github.com/${githubRepo.owner}/${githubRepo.repo}/releases`}>
         {t.viewReleases[language]}
-      </a>
+      </OutlineButton>
     );
   }
 
   return (
-    <a
-      href={apkUrl}
-      className="rounded-full border border-border px-4 py-2 text-sm text-ink transition-colors hover:border-ink"
-    >
-      {t.downloadApk[language]}
-      {version ? ` (${version})` : ""}
-    </a>
+    <OutlineButton href={apkUrl}>
+      {`${t.downloadApk[language]}${version ? ` (${version})` : ""}`}
+    </OutlineButton>
   );
 }
 
-function DemoMedia({
-  project,
-  label,
-}: {
-  project: Project;
-  label: string;
-}) {
-  const className = "h-full w-full object-cover";
+function ProjectMedia({ project, label }: { project: Project; label: string }) {
+  const { language } = useLanguage();
+  const className = "aspect-video w-full rounded-3xl object-cover shadow-2xl";
 
   if (project.demoVideo) {
     return (
@@ -85,128 +84,83 @@ function DemoMedia({
   }
 
   const src = project.demoGif ?? project.thumbnail;
-  return src ? <img src={src} alt={label} className={className} /> : null;
-}
-
-function ProjectMedia({
-  project,
-  label,
-}: {
-  project: Project;
-  label: string;
-}) {
-  const { language } = useLanguage();
-
-  if (project.demoVideo || project.demoGif || project.thumbnail) {
-    return <DemoMedia project={project} label={label} />;
-  }
+  if (src) return <img src={src} alt={label} className={className} />;
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-accent-soft text-sm text-muted">
+    <div className="flex aspect-video w-full items-center justify-center rounded-3xl bg-white/10 text-white/80">
       {translations.projects.previewSoon[language]}
     </div>
   );
 }
 
-function PhoneFrameMedia({ project, label }: { project: Project; label: string }) {
-  return (
-    <div className="flex h-full w-full items-center justify-center bg-accent-soft/40 py-6">
-      <div className="relative aspect-[9/19] h-72 overflow-hidden rounded-[1.75rem] border-4 border-ink bg-black shadow-lg">
-        <DemoMedia project={project} label={label} />
-      </div>
-    </div>
-  );
-}
-
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { language } = useLanguage();
   const t = translations.projects;
   const title = project.title[language];
-  const description = project.description[language];
   const linkUrl = project.type === "web" ? project.liveUrl : project.webVersionUrl;
 
-  const hasDemo = Boolean(project.demoVideo || project.demoGif);
+  const typeLabel =
+    project.type === "web"
+      ? t.typeWeb[language]
+      : project.webVersionUrl
+        ? t.typeMobileAndWeb[language]
+        : t.typeMobile[language];
 
-  const mediaLabel = hasDemo
-    ? language === "fr"
-      ? `Démo animée de ${title}`
-      : `Animated demo of ${title}`
-    : language === "fr"
-      ? `Aperçu de ${title}`
-      : `Preview of ${title}`;
+  const mediaLabel =
+    project.demoVideo || project.demoGif
+      ? language === "fr"
+        ? `Démo animée de ${title}`
+        : `Animated demo of ${title}`
+      : language === "fr"
+        ? `Aperçu de ${title}`
+        : `Preview of ${title}`;
 
-  // Sur mobile, le gif est un enregistrement d'écran portrait : on le
-  // cadre dans un mockup de téléphone plutôt que de l'étirer en plein écran.
-  // Les vidéos de présentation sont en paysage, elles gardent le format 16:9.
-  const isPhoneDemo =
-    project.type === "mobile" && !project.demoVideo && Boolean(project.demoGif);
+  const media = <ProjectMedia project={project} label={mediaLabel} />;
 
-  const media = isPhoneDemo ? (
-    <PhoneFrameMedia project={project} label={mediaLabel} />
-  ) : (
-    <ProjectMedia project={project} label={mediaLabel} />
-  );
-
-  const mediaWrapperClass = isPhoneDemo
-    ? "mt-4 w-full border-y border-border transition-opacity hover:opacity-90"
-    : "mt-4 block aspect-video w-full border-y border-border transition-opacity hover:opacity-90";
+  // Une bande sur deux met l'image à gauche, pour casser la répétition.
+  const mediaFirst = index % 2 === 1;
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
-      <div className="flex items-start justify-between gap-4 p-6 pb-0">
-        <h3 className="text-lg font-semibold text-ink">{title}</h3>
-        <div className="flex shrink-0 flex-wrap justify-end gap-2">
-          <span className="rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
-            {project.type === "web" ? t.typeWeb[language] : t.typeMobile[language]}
-          </span>
-          {project.type === "mobile" && project.webVersionUrl && (
-            <span className="rounded-full border border-border px-3 py-1 text-xs uppercase tracking-wide text-muted">
-              {t.typeWeb[language]}
-            </span>
-          )}
+    <article id={project.id} style={{ backgroundColor: project.color }} className="scroll-mt-20 text-white">
+      <div
+        className={`mx-auto flex max-w-6xl flex-col gap-10 px-6 py-20 lg:items-center lg:gap-12 lg:py-24 ${
+          mediaFirst ? "lg:flex-row-reverse" : "lg:flex-row"
+        }`}
+      >
+        <div className="min-w-0 lg:flex-1">
+          <p className="font-display text-sm font-bold uppercase tracking-[0.15em] text-white/75">
+            {String(index + 1).padStart(2, "0")} — {typeLabel}
+          </p>
+          <h3 className="mt-3 font-display text-4xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl">
+            {title}
+          </h3>
+          <p className="mt-5 text-lg text-white/85">{project.description[language]}</p>
+          <p className="mt-4 font-semibold">{project.tags.join(" · ")}</p>
+
+          <div className="mt-7 flex flex-wrap gap-3">
+            {project.type === "web" && (
+              <SolidButton href={project.liveUrl} color={project.color}>
+                {t.viewSite[language]}
+              </SolidButton>
+            )}
+            {project.type === "mobile" && project.webVersionUrl && (
+              <SolidButton href={project.webVersionUrl} color={project.color}>
+                {t.tryOnline[language]}
+              </SolidButton>
+            )}
+            {project.type === "mobile" && project.githubRepo && (
+              <ApkDownloadButton githubRepo={project.githubRepo} />
+            )}
+          </div>
         </div>
-      </div>
 
-      {linkUrl ? (
-        <a href={linkUrl} target="_blank" rel="noreferrer" className={mediaWrapperClass}>
-          {media}
-        </a>
-      ) : (
-        <div className={mediaWrapperClass}>{media}</div>
-      )}
-
-      <div className="flex flex-1 flex-col p-6">
-        <p className="text-sm leading-relaxed text-muted">
-          {description}
-        </p>
-
-        <ProjectTags tags={project.tags} />
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          {project.type === "web" && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            >
-              {t.viewSite[language]}
+        <div className="min-w-0 lg:flex-1">
+          {linkUrl ? (
+            <a href={linkUrl} target="_blank" rel="noreferrer" className="block transition-opacity hover:opacity-90">
+              {media}
             </a>
-          )}
-
-          {project.type === "mobile" && project.webVersionUrl && (
-            <a
-              href={project.webVersionUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            >
-              {t.tryOnline[language]}
-            </a>
-          )}
-
-          {project.type === "mobile" && project.githubRepo && (
-            <ApkDownloadButton githubRepo={project.githubRepo} />
+          ) : (
+            media
           )}
         </div>
       </div>

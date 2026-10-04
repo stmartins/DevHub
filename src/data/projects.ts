@@ -69,10 +69,11 @@ export const projects: Project[] = [
     type: "mobile",
     title: { fr: "PDFland", en: "PDFland" },
     description: {
-      fr: "Application mobile pour éditer des PDF en déplacement : importer un fichier, y apposer une signature manuscrite, ajouter du texte libre et masquer/réécrire du texte existant, le tout appliqué en une seule fois via un backend Go dédié. App en Flutter, API en Go avec pdfcpu.",
-      en: "Mobile app for editing PDFs on the go: import a file, apply a handwritten signature, add free text and cover/rewrite existing text, all applied at once through a dedicated Go backend. App in Flutter, API in Go with pdfcpu.",
+      fr: "Application Android pour éditer des PDF en déplacement : signer, modifier ou ajouter du texte, scanner un document papier avec l'appareil photo, fusionner, organiser les pages, compresser et convertir des photos en PDF. Tout le traitement se fait sur le téléphone, hors ligne, sans rien envoyer à un serveur. App en Flutter, moteur PDF en Go (pdfcpu) embarqué via dart:ffi.",
+      en: "Android app for editing PDFs on the go: sign, edit or add text, scan paper documents with the camera, merge, reorder pages, compress and turn photos into PDFs. All processing runs on the phone, offline, with nothing uploaded to a server. App in Flutter, Go PDF engine (pdfcpu) embedded through dart:ffi.",
     },
     tags: ["Flutter", "Go"],
-    demoGif: "/media/pdfland-demo.gif",
+    thumbnail: "/media/pdfland-thumb.jpg",
+    demoVideo: "/media/pdfland-demo.mp4",
   },
 ];

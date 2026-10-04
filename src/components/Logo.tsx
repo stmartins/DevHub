@@ -1,0 +1,18 @@
+// Même dessin que public/favicon.svg : un D blanc sur fond noir, souligné par
+// les quatre couleurs des bandes de projets.
+export function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <rect width="48" height="48" rx="12" fill="#0a0a0a" />
+      <path
+        fill="#ffffff"
+        fillRule="evenodd"
+        d="M12 8H22.5C30.8 8 36 13.2 36 20C36 26.8 30.8 32 22.5 32H12ZM18.6 14V26H22.3C26.6 26 29.3 23.7 29.3 20C29.3 16.3 26.6 14 22.3 14Z"
+      />
+      <rect x="12" y="36" width="5.4" height="4" rx="2" fill="#f97316" />
+      <rect x="18.2" y="36" width="5.4" height="4" rx="2" fill="#a78bfa" />
+      <rect x="24.4" y="36" width="5.4" height="4" rx="2" fill="#60a5fa" />
+      <rect x="30.6" y="36" width="5.4" height="4" rx="2" fill="#34d399" />
+    </svg>
+  );
+}

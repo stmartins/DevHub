@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLanguage, type Language } from "../i18n/language";
 import { translations } from "../i18n/translations";
+import { LogoMark } from "./Logo";
 
 export function Header() {
   const { language, setLanguage } = useLanguage();
@@ -38,7 +39,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
-        <a href="#top" className="font-display text-2xl font-extrabold">
+        <a href="#top" className="flex items-center gap-2.5 font-display text-2xl font-extrabold">
+          <LogoMark className="h-9 w-9" />
           DevHub
         </a>
         <div className="flex items-center gap-4 sm:gap-6">

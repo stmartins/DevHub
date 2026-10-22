@@ -70,11 +70,10 @@ function ProjectMedia({ project, label }: { project: Project; label: string }) {
   if (project.youtubeId) {
     return (
       <iframe
-        src={`https://www.youtube-nocookie.com/embed/${project.youtubeId}`}
+        src={`https://www.youtube-nocookie.com/embed/${project.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${project.youtubeId}&playsinline=1&rel=0`}
         title={label}
         className={className}
-        loading="lazy"
-        allow="accelerometer; encrypted-media; picture-in-picture; fullscreen"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         allowFullScreen
       />
     );

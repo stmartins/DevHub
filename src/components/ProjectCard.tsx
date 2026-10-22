@@ -67,18 +67,6 @@ function ProjectMedia({ project, label }: { project: Project; label: string }) {
   const { language } = useLanguage();
   const className = "aspect-video w-full rounded-3xl object-cover shadow-2xl";
 
-  if (project.youtubeId) {
-    return (
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${project.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${project.youtubeId}&playsinline=1&rel=0`}
-        title={label}
-        className={className}
-        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-        allowFullScreen
-      />
-    );
-  }
-
   if (project.demoVideo) {
     return (
       <video
@@ -119,7 +107,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         : t.typeMobile[language];
 
   const mediaLabel =
-    project.youtubeId || project.demoVideo || project.demoGif
+    project.demoVideo || project.demoGif
       ? language === "fr"
         ? `Démo animée de ${title}`
         : `Animated demo of ${title}`

@@ -12,6 +12,8 @@ export type BaseProject = {
   demoGif?: string;
   // Vidéo de démo (mp4/webm), prioritaire sur le gif quand elle est définie.
   demoVideo?: string;
+  // Identifiant d'une vidéo YouTube, intégrée en lecteur (prioritaire sur la vidéo et le gif).
+  youtubeId?: string;
 };
 
 export type WebProject = BaseProject & {
@@ -83,5 +85,17 @@ export const projects: Project[] = [
     thumbnail: "/media/pdfland-thumb.jpg",
     demoVideo: "/media/pdfland-demo.mp4",
     webVersionUrl: "https://pdfland-web.onrender.com/",
+  },
+  {
+    id: "shop-list",
+    color: "#8a5a00",
+    type: "mobile",
+    title: { fr: "Shop List", en: "Shop List" },
+    description: {
+      fr: "Liste de courses partagée en temps réel : listes communes, dictée vocale et widgets d'écran d'accueil, import de recettes depuis une adresse web, menu de la semaine, cartes de fidélité et ordre des rayons personnalisable. App Android en Kotlin / Jetpack Compose, API en Go et Postgres, synchronisation par SSE.",
+      en: "Real-time shared shopping list: common lists, voice dictation and home-screen widgets, recipe import from a web address, weekly menu, loyalty cards and a customizable aisle order. Android app in Kotlin / Jetpack Compose, Go API with Postgres, SSE sync.",
+    },
+    tags: ["Kotlin", "Jetpack Compose", "Go", "PostgreSQL"],
+    youtubeId: "3opQRPVTFpM",
   },
 ];
